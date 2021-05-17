@@ -5,6 +5,14 @@
     Date: 2021/4/20
     Introduce: Particle swarm optimization (Pso)
     介绍: 粒子群算法
+
+    改进：
+        1. 自适应权重系数 w - f(w)
+        2. 全局控制因子(收缩因子)
+        3. 自适应学习因子
+        4. 权重w策略(递减权重策略 自适应权重策略 随即权重策略)
+        ……
+
 """
 
 import numpy as np
@@ -115,16 +123,6 @@ def draw_3d(f, extent, point, interval):
     ax.scatter(point[0][0], point[0][1], point[1], c='r', marker='^')
     ax.view_init(elev=30, azim=125)
     fig.show()
-
-
-"""
-    改进：
-        1. 自适应权重系数 w - f(w)
-        2. 全局控制因子(收缩因子)
-        3. 自适应学习因子
-        4. 权重w策略(递减权重策略 自适应权重策略 随即权重策略)
-        ……
-"""
 
 
 if __name__ == '__main__':
