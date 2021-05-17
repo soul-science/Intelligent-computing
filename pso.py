@@ -1,3 +1,12 @@
+"""
+    Module: Pso
+    Author: ShaoHaozhou
+    motto: Self-discipline, self-improvement, self-love
+    Date: 2021/4/20
+    Introduce: Particle swarm optimization (Pso)
+    介绍: 粒子群算法
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D

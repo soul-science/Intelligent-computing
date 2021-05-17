@@ -1,5 +1,5 @@
 """
-    Module: GA
+    Module: AiPso
     Author: ShaoHaozhou
     motto: Self-discipline, self-improvement, self-love
     Date: 2021/4/20
