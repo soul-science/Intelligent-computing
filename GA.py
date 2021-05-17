@@ -106,13 +106,9 @@ class GABase(object):
         self.best = [None, np.inf]
         self.initialize()
         for _ in range(for_):
-            print(_, ": start")
             self.select(fitness=self.fitness())
-            print(_, ": select")
             self.cross()
-            print(_, ": cross")
             self.mutate()
-            print(_, ": mutate")
             self.fit_ = np.append(self.fit_, self.best[1])
 
     def draw_fit(self):

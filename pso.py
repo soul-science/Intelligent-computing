@@ -102,11 +102,10 @@ def draw_3d(f, extent, point, interval):
     # x.shape = (1, x.shape[0])
     # y.shape = (1, y.shape[0])
     x, y = np.meshgrid(x, y)
-    print(x.shape, y.shape, f(x, y).shape)
     ax.plot_surface(x, y, f(x, y), rstride=1, cstride=1)
     ax.scatter(point[0][0], point[0][1], point[1], c='r', marker='^')
     ax.view_init(elev=30, azim=125)
-    plt.show()
+    fig.show()
 
 
 """

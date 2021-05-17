@@ -161,7 +161,7 @@ class KSA(SA):
 
                 fxx_ = np.apply_along_axis(self.f, 1, xx_)
                 # print(fxx_, fx[i])
-                if min(np.exp(-(fxx_ - fx[i]) / c), 1) > np.random.rand():
+                if min(np.exp(-(fxx_ - fx[i]) if fxx_ - fx[i] < np.e else c / c), 1) > np.random.rand():
                     xx.extend(xx_)
                     fxx.extend(fxx_)
                     break
