@@ -6,4 +6,4 @@ Shao's Intelligent computing algorithm
 Some of the warehouse for intelligent computing study algorithm procedures.There is a problem please contact 2403421721@qq.com
 
 
-待做: ACO: {class: ACO, func: MAKLINK, Dijkstra}, ART, RBF, SOA
+待做: ACO: ART, RBF, SOA
