@@ -106,9 +106,13 @@ class GABase(object):
         self.best = [None, np.inf]
         self.initialize()
         for _ in range(for_):
+            print(_, ": start")
             self.select(fitness=self.fitness())
+            print(_, ": select")
             self.cross()
+            print(_, ": cross")
             self.mutate()
+            print(_, ": mutate")
             self.fit_ = np.append(self.fit_, self.best[1])
 
     def draw_fit(self):
@@ -185,7 +189,7 @@ class DGA(GABase):
              after each other are randomly selected at different locations to generate two individuals
             交叉遗传过程采取随机选取不同位置对前后的个体进行交叉遗传，生成两个个体。
         """
-        if self.can_replace is True:
+        if self.can_replace:
             for i in range(self.pop.shape[0]):
                 if self.max_pop <= self.pop.shape[0]:
                     break
@@ -224,11 +228,12 @@ class DGA(GABase):
             for i in range(self.pop.shape[0]):
                 if np.random.rand() < self.cv:
                     pos = np.random.randint(self.length)
-                    while True:
-                        cross = np.random.choice(self.kinds)
-                        if cross not in self.pop[i]:
-                            self.pop[i][pos] = cross
-                            break
+                    cross = np.random.choice(self.kinds)
+                    if cross not in self.pop[i]:
+                        self.pop[i][pos] = cross
+                    else:
+                        self.pop[i][np.where(self.pop[i] == cross)[0]] = self.pop[i][pos]
+                        self.pop[i][pos] = cross
 
     def fit(self, for_=1000):
         super().fit(for_)
@@ -336,22 +341,43 @@ class GA(object):
 
 
 if __name__ == "__main__":
-    f = lambda x: sum(x * np.sin(x) + x * np.cos(2 * x))
+    # f = lambda x: sum(x * np.sin(x) + x * np.cos(2 * x))
+    #
+    # # 测试 DGA
+    # dga = DGA(f, cv=0.1, sv=0.01, kinds=np.linspace(0, 10, 100), max_pop=100, length=5)
+    # dga.fit(1000)
+    # dga.draw_fit()
+    # print(dga.best)
+    #
+    # # 测试 CGA
+    # cga = CGA(f, cv=0.1, sv=0.1, max_pop=100, length=5, extent=[0, 10])
+    # cga.fit(1000)
+    # cga.draw_fit()
+    # print(cga.best)
+    #
+    # # 测试 GA
+    # ga = GA(f, cv=0.1, sv=0.1, max_pop=100, length=5, extent_or_kinds=[0, 10])
+    # ga.fit(1000)
+    # ga.draw_fit()
+    # print(ga.result())
 
-    # 测试 DGA
-    dga = DGA(f, cv=0.1, sv=0.01, kinds=np.linspace(0, 10, 100), max_pop=100, length=5)
-    dga.fit(1000)
+    #
+    distance = lambda x, y: np.sqrt((x[0] - y[0]) ** 2 + (x[1] - y[1]) ** 2)
+    points = open("./points.txt", 'r', encoding="utf-8", ).read().splitlines()
+    points = [list(map(int, each.strip().split(" "))) for each in points]
+    length = len(points)
+    rect = np.zeros((length, length))
+    for i in range(length):
+        for j in range(length):
+            rect[i][j] = distance(points[i], points[j])
+
+    def f(x):
+        d = 0
+        for i in range(len(x)-1):
+            d += rect[int(x[i])][int(x[i+1])]
+        return d
+
+    dga = DGA(f, cv=0.1, sv=0.05, kinds=list(range(0, length)), max_pop=100, length=length, can_replace=False)
+    dga.fit(10000)
     dga.draw_fit()
     print(dga.best)
-
-    # 测试 CGA
-    cga = CGA(f, cv=0.1, sv=0.1, max_pop=100, length=5, extent=[0, 10])
-    cga.fit(1000)
-    cga.draw_fit()
-    print(cga.best)
-
-    # 测试 GA
-    ga = GA(f, cv=0.1, sv=0.1, max_pop=100, length=5, extent_or_kinds=[0, 10])
-    ga.fit(1000)
-    ga.draw_fit()
-    print(ga.result())
