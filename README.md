@@ -6,4 +6,4 @@ Shao's Intelligent computing algorithm
 Some of the warehouse for intelligent computing study algorithm procedures.There is a problem please contact 2403421721@qq.com
 
 
-待做: ART, RBF, SOA
+待做: ART, SOA
